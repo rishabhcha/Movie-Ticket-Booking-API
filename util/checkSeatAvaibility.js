@@ -14,7 +14,6 @@ let isAvailable = (screenName, seats) => {
         let seatsToReserve = seats[row];
         var reservedSeatsSet = new Set(reservedSeats);
         for(i in seatsToReserve){
-          console.log(seatsToReserve[i]);
           if (seatsToReserve[i] >= numberOfSeats) {
             return reject("Please enter correct seat number. "+
             "Given seat number exceeds total number of seat in given row");

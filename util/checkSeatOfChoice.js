@@ -27,7 +27,6 @@ let getSeatAvailableAtChoice = (screenName, numSeats, choice) => {
           break;
         }
       }
-      console.log(i,j);
       if(j-i != numSeats-1){
         return reject('Sorry no such seats available!!');
       }
