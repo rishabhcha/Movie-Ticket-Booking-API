@@ -8,7 +8,7 @@ let {mongoose} = require('./db/mongoose');
 let {Screen} = require('./models/screen');
 let {isAvailable} = require('./util/checkSeatAvaibility');
 let {getUnreservedSeats} = require('./util/unreservedSeats');
-let {getgetSeatAvailableAtChoiceSe} = require('./util/checkSeatOfChoice');
+let {getSeatAvailableAtChoice} = require('./util/checkSeatOfChoice');
 
 let app = express();
 app.use(bodyParser.json());
@@ -56,10 +56,11 @@ app.get('/screens/:screen_name/seats', async (req, res) => {
     if(query.status && query.status === 'unreserved'){//to get the available seats for a given screen
       let unreservedSeats = await getUnreservedSeats(req.params.screen_name);
       res.send(unreservedSeats);
-    }else if (query.numSeats && query.choice) {
-
-    }else {
-      return res.status(404).send();
+    }else if (query.numSeats && query.choice) {//to get information of available tickets at a given position
+      let seatOfChoice = await getSeatAvailableAtChoice(req.params.screen_name, query.numSeats, query.choice);
+      res.send(seatOfChoice);
+    }else {//return error 404 if any other endpoint is used.
+      return res.status(404).send('Page not found');
     }
   } catch (e) {
       res.status(400).send(e);
