@@ -14,11 +14,14 @@ let getSeatAvailableAtChoice = (screenName, numSeats, choice) => {
       let reservedSeats = screen.seatInfo.get(choiceRow).reservedSeats;
       let reservedSeatsSet = new Set(reservedSeats);
       let numberOfSeats = screen.seatInfo.get(choiceRow).numberOfSeats;
+      if (reservedSeatsSet.has(choiceSeatNo)) {
+        return reject("Seat is already reserved!!");
+      }
       let i = j = choiceSeatNo;
       while(j-i < numSeats-1){
-        if(i>0 && !reservedSeatsSet.has(i-1) && !aisleSeatsSet.has(i)){
+        if(i>0 && !reservedSeatsSet.has(i-1) && (!aisleSeatsSet.has(i) || i==choiceSeatNo)){
           i--;
-        }else if (j<numberOfSeats && !reservedSeatsSet.has(j+1) && !aisleSeatsSet.has(j)) {
+        }else if (j<numberOfSeats && !reservedSeatsSet.has(j+1) && (!aisleSeatsSet.has(j) || j==choiceSeatNo)) {
           j++;
         }else{
           break;
